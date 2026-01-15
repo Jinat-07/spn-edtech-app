@@ -1,0 +1,10 @@
+{
+  "appId": "com.spn.edtech",
+  "appName": "SPN EdTech",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://spnedtech.gt.tc",
+    "cleartext": false
+  }
+}
