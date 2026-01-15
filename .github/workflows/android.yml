@@ -1,0 +1,38 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Ionic + Capacitor
+        run: |
+          npm install -g @ionic/cli
+          npm install
+
+      - name: Init Capacitor
+        run: |
+          npx cap init "SPN EdTech" "com.spn.edtech" --web-dir=www
+          npx cap add android
+
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: SPN-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
