@@ -9,24 +9,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install
 
       - name: Install Ionic + Capacitor
         run: |
           npm install -g @ionic/cli
-          npm install
+          npm install @capacitor/cli
 
-      - name: Init Capacitor
+      - name: Initialize Capacitor
         run: |
           npx cap init "SPN EdTech" "com.spn.edtech" --web-dir=www
           npx cap add android
 
-      - name: Build APK
+      - name: Build Android APK
         run: |
           cd android
           ./gradlew assembleDebug
